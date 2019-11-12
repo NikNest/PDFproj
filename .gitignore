@@ -29,9 +29,12 @@ hs_err_pid*
 
 # Intellij
 .idea/
+.idea/*
 *.iml
 *.iws
 
 # Maven
 log/
 target/
+# Default ignored files
+/workspace.xml
