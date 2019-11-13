@@ -4,7 +4,9 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class PDFdocumentProperties {
     private PDDocumentInformation documentProperties;
@@ -21,122 +23,121 @@ public class PDFdocumentProperties {
         documentProperties = document.getDocumentInformation();
     }
 
-    /**
-     * This method is used to set the value for the property of the PDF document named Author.
-     * @param author
-     */
-    public void setAuthor(String author){
+    public void setAuthor(String author) {
         documentProperties.setAuthor(author);
     }
 
-    /**
-     * This method is used to set the value for the property of the PDF document named Title.
-     * @param title
-     */
-    public void setTitle(String title){
+    public void setTitle(String title) {
         documentProperties.setTitle(title);
     }
 
-    /**
-     * This method is used to set the value for the property of the PDF document named Creator.
-     * @param creator
-     */
-    public void setCreator(String creator){
+    public void setCreator(String creator) {
         documentProperties.setCreator(creator);
     }
 
-    /**
-     * This method is used to set the value for the property of the PDF document named Subject.
-     * @param subject
-     */
-    public void setSubject(String subject){
+    public void setSubject(String subject) {
         documentProperties.setSubject(subject);
     }
 
     /**
-     * This method is used to set the value for the property of the PDF document named CreationDate.
-     * @param date
+     * @param dateStr , yyyy.mm.dd
      */
-    public void setCreationDate(Calendar date){
-        documentProperties.setCreationDate(date);
+    public void setCreationDate(String dateStr){
+        try {
+            //date from string to string array
+            String[] dateDMY = dateStr.split("\\.");
+            //wrong input checking
+            if (dateDMY.length !=3) throw(new Exception());
+            //creating date for pdfbox API method
+            //-1 because GregorianCalendar interpreat 01.00.2000 as 1 jan
+            Calendar date = new GregorianCalendar(Integer.parseInt(dateDMY[2]),
+                    Integer.parseInt(dateDMY[1])-1, Integer.parseInt(dateDMY[0]));
+            documentProperties.setCreationDate(date);
+        }catch(Exception e){
+        System.out.println("Wrong Date input(DD.MM.YYYY)");
+        }
     }
 
     /**
-     * This method is used to set the value for the property of the PDF document named ModificationDate.
-     * @param date
+     * @param dateStr , yyyy.mm.dd
      */
-    public void setModificationDate(Calendar date){
-        documentProperties.setModificationDate(date);
+    public void setModificationDate(String dateStr){
+        try {
+            //date from string to string array
+            String[] dateDMY = dateStr.split("\\.");
+            //wrong input checking
+            if (dateDMY.length !=3) throw(new Exception());
+            //creating date for pdfbox API method
+            //-1 because GregorianCalendar interpreat 01.00.2000 as 1 jan
+            Calendar date = new GregorianCalendar(Integer.parseInt(dateDMY[2]),
+                    Integer.parseInt(dateDMY[1])-1, Integer.parseInt(dateDMY[0]));
+            documentProperties.setModificationDate(date);
+        }catch(Exception e){
+            System.out.println("Wrong Date input(DD.MM.YYYY)");
+        }
     }
 
-    /**
-     * This method is used to set the value for the property of the PDF document named Keywords.
-     * @param keywordsList
-     */
-    public void setKeywords(String keywordsList){
+    public void setKeywords(String keywordsList) {
         documentProperties.setKeywords(keywordsList);
     }
 
-    /**
-     * This method is used to retrieve the value for the property of the PDF document named Author.
-     */
-    public String getAuthor(){
+    ////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+
+    public String getAuthor() {
         return documentProperties.getAuthor();
     }
 
-    /**
-     * This method is used to retrieve the value for the property of the PDF document named Title.
-     */
-    public String getTitle(){
+    public String getTitle() {
         return documentProperties.getTitle();
     }
 
-    /**
-     * This method is used to retrieve the value for the property of the PDF document named Creator.
-     */
-    public String setCreator(){
+    public String getCreator() {
         return documentProperties.getCreator();
     }
 
-    /**
-     * This method is used to retrieve the value for the property of the PDF document named Subject.
-     */
-    public String getSubject(){
+    public String getSubject() {
         return documentProperties.getSubject();
     }
 
-    /**
-     * This method is used to retrieve the value for the property of the PDF document named CreationDate.
-     */
-    public Calendar getCreationDate(){
-        return documentProperties.getCreationDate();
+    public String getCreationDate() {
+        //calender performance sucks
+        Calendar date = documentProperties.getCreationDate();
+        //it helps somehow
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy");
+        if(date == null)
+            return null;
+        else
+            return sdf.format(date.getTime());
+
     }
 
-    /**
-     * This method is used to retrieve the value for the property of the PDF document named ModificationDate.
-     */
-    public Calendar getModificationDate(){
-        return documentProperties.getModificationDate();
+    public String getModificationDate(){
+        //calender performance sucks
+        Calendar date = documentProperties.getModificationDate();
+        //it helps somehow
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy");
+        if(date == null)
+            return null;
+        else
+            return sdf.format(date.getTime());
     }
 
-    /**
-     * This method is used to retrieve the value for the property of the PDF document named Keywords.
-     */
-    public String getKeywords(){
+    public String getKeywords() {
         return documentProperties.getKeywords();
     }
 
     /**
-     * prints all properties of
+     * prints all properties of pdf in terminal
      */
     public void printAllProperties() {
-        System.out.println("Author: " + documentProperties.getAuthor());
-        System.out.println("Title: " + documentProperties.getTitle());
-        System.out.println("Creator: " + documentProperties.getCreator());
-        System.out.println("Subject: " + documentProperties.getSubject());
-        System.out.println("Creation date: " + documentProperties.getCreationDate());
-        System.out.println("Modification date: " + documentProperties.getModificationDate());
-        System.out.println("Keywords: " + documentProperties.getKeywords());
+        System.out.println("Author: " + this.getAuthor());
+        System.out.println("Title: " + this.getTitle());
+        System.out.println("Creator: " + this.getCreator());
+        System.out.println("Subject: " + this.getSubject());
+        System.out.println("Creation date: " + this.getCreationDate());
+        System.out.println("Modification date: " + this.getModificationDate());
+        System.out.println("Keywords: " + this.getKeywords());
     }
     public void saveAllPropertiesAsFile(String path) throws IOException {
         PDDocument document = new PDDocument();
