@@ -1,6 +1,9 @@
 package main.java;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 import java.io.IOException;
 
@@ -15,12 +18,24 @@ public class MainMethod {
     private static PDDocument document;
     public static void main(String[] args) throws IOException {
         //read pdf document from path in document
-        PDFcreator.createBlankPage(pathBlank, 2);
-        document = PDFreader.read(pathGBIFolien);
-        PDFdocumentProperties info = new PDFdocumentProperties(document);
-        info.printAllProperties();
+        //PDFcreator.createBlankPage(pathBlank, 1);
+        document = PDFreader.read(pathBlank);
+
+        PDFtext textAdder = new PDFtext(document);
+
+        textAdder.tabulate();
+        textAdder.addText("First line");
+        textAdder.nextLine();
+        textAdder.addText("Second line");
+        textAdder.nextLine();
+        textAdder.nextLine();
+        textAdder.addText("Last line");
+        textAdder.previousLine();
+        textAdder.tabulate();
+        textAdder.addText("Third line");
+
         //save changes
-        document.save(pathGBIFolien);
+        document.save(pathBlank);
         document.close();
     }
 }

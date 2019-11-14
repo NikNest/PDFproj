@@ -3,21 +3,23 @@ package main.java;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 
-public class PDFcontentModifier {
+public class PDFpagesModifier {
+    PDDocument document;
+    public PDFpagesModifier(PDDocument document) {
+        this.document = document;
+    }
     /**
      * adding blank page to document
-     * @param document
      */
-    public static void addPage(PDDocument document) {
+    public void addPage() {
         document.addPage(new PDPage());
     }
 
     /**
      * removing page pageNumber from file ! page's counting begins with 0(same as arrays)
-     * @param document
      * @param pageNumber , page that will be removed
      */
-    public static void removePage(PDDocument document, int pageNumber) {
+    public void removePage(int pageNumber) {
         /*
         You can remove a page from the PDF document using the
         removePage() method of the PDDocument class. To this method,
@@ -25,5 +27,6 @@ public class PDFcontentModifier {
         */
         document.removePage(pageNumber);
     }
+
 
 }
