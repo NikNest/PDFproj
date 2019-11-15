@@ -40,9 +40,6 @@ public class PDFtext {
         Retrieve the object of the required page by passing
         its index to this method as shown below.
         */
-
-        //RAWRAWRAW
-
         PDPage page = document.getPage(pageNumber);
         if (append) {
             contentStream = new PDPageContentStream(
