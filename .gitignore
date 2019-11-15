@@ -25,13 +25,11 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
-docs/*
+docs/*.png
+docs/*.pdf
 
 # Intellij
-.idea/
 .idea/*
-*.iml
-*.iws
 
 # Maven
 log/
