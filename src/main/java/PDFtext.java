@@ -94,15 +94,20 @@ public class PDFtext {
 
     }
 
-    public void setPageNumber(int pageNumber) {
+    void setPageNumber(int pageNumber) {
         this.pageNumber = pageNumber;
     }
 
-    public void setFont(PDType1Font font) {
+    void setFont(PDType1Font font) {
         this.font = font;
     }
 
-    public void setFontSize(int fontSize) {
+    void setFontSize(int fontSize) {
         this.fontSize = fontSize;
+    }
+
+    void setOffset(int x, int y){
+        offset[0]= x;
+        offset[1]= y;
     }
 }

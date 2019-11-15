@@ -30,15 +30,18 @@ public class MainMethod {
     public static void main(String[] args) throws IOException {
         //called to initiallize Map paths
         MainMethod temp = new MainMethod();
-        //PDFcreator.createBlankPage(paths.get("pathBlank"), 1);
+        PDFcreator.createBlankPage(paths.get("pathBlank"), 5);
         PDFreader reader = new PDFreader(paths.get("pathBlank"));
         document = reader.load();
 
-
-        PDFpicsInsert picInserter = new PDFpicsInsert(document);
-        picInserter.setOverwrite(false);
-        picInserter.setAppend(false);
-        picInserter.insertPic(0, 50, 150, paths.get("pathPicJPG"));
+        PDFtext writer = new PDFtext(document);
+        for(int i=1; i<6;i++) {
+            writer.setOffset(300, 50);
+            writer.addText(Integer.toString(i));
+            writer.setPageNumber(i);
+        }
+        PDFsplitter splitter = new PDFsplitter(document);
+        splitter.split(paths.get("pathBlank"));
 
         //save changes
         document.save(paths.get("pathBlank"));
