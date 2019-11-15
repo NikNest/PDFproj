@@ -7,8 +7,12 @@ import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
 import java.io.IOException;
 
-public class PDFpicsInsert {
+class PDFpicsInsert {
     private PDDocument document;
+    //append or prepend
+    private boolean append = true;
+    //overwrite existing file or not
+    private boolean overwrite = true;
 
     /**
      * @param doc , document that will be edited
@@ -29,7 +33,7 @@ public class PDFpicsInsert {
      * @throws IOException
      */
 
-    public void insertPic(int pageIndex, int X, int Y, String pathPic) throws IOException {
+    void insertPic(int pageIndex, int X, int Y, String pathPic) throws IOException {
 
         //Retrieving the page
         PDPage page = document.getPage(pageIndex);
@@ -38,14 +42,34 @@ public class PDFpicsInsert {
         PDImageXObject pdImage = PDImageXObject.createFromFile(pathPic,document);
 
         //creating the PDPageContentStream object
-        PDPageContentStream contents = new PDPageContentStream(document, page);
+        //PDPageContentStream contents = new PDPageContentStream(document, page);
+
+        PDPageContentStream contents;
+        if(overwrite) {
+            contents = new PDPageContentStream(
+                    document, page, PDPageContentStream.AppendMode.OVERWRITE, false);
+            overwrite = false;
+        } else if (append) {
+            contents = new PDPageContentStream(
+                    document, page, PDPageContentStream.AppendMode.APPEND, false);
+        } else {
+            contents = new PDPageContentStream(
+                    document, page, PDPageContentStream.AppendMode.PREPEND, false);
+        }
+
+
 
         //Draw an image at the x,y coordinates, with the default size of the image.
         contents.drawImage(pdImage, X, Y);
-
         //Closing the PDPageContentStream object
         contents.close();
     }
 
+    void setAppend(boolean append) {
+        this.append = append;
+    }
 
+    void setOverwrite(boolean overwrite) {
+        this.overwrite = overwrite;
+    }
 }

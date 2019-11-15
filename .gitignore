@@ -27,6 +27,7 @@ hs_err_pid*
 
 docs/*.png
 docs/*.pdf
+docs/*
 
 # Intellij
 .idea/*
