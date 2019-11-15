@@ -11,11 +11,7 @@ import java.util.GregorianCalendar;
 public class PDFdocumentProperties {
     private PDDocumentInformation documentProperties;
 
-    /**
-     * initialize PDDocumentInformation object(has info about document)
-     * @param document
-     */
-    public PDFdocumentProperties(PDDocument document) {
+    PDFdocumentProperties(PDDocument document) {
         /*
             PDFBox provides a class called PDDocumentInformation and this class provides
             various methods. These methods can set various properties to the document and retrieve them.
@@ -23,26 +19,26 @@ public class PDFdocumentProperties {
         documentProperties = document.getDocumentInformation();
     }
 
-    public void setAuthor(String author) {
+    void setAuthor(String author) {
         documentProperties.setAuthor(author);
     }
 
-    public void setTitle(String title) {
+    void setTitle(String title) {
         documentProperties.setTitle(title);
     }
 
-    public void setCreator(String creator) {
+    void setCreator(String creator) {
         documentProperties.setCreator(creator);
     }
 
-    public void setSubject(String subject) {
+    void setSubject(String subject) {
         documentProperties.setSubject(subject);
     }
 
     /**
      * @param dateStr , yyyy.mm.dd
      */
-    public void setCreationDate(String dateStr){
+    void setCreationDate(String dateStr){
         try {
             //date from string to string array
             String[] dateDMY = dateStr.split("\\.");
@@ -61,7 +57,7 @@ public class PDFdocumentProperties {
     /**
      * @param dateStr , yyyy.mm.dd
      */
-    public void setModificationDate(String dateStr){
+    void setModificationDate(String dateStr){
         try {
             //date from string to string array
             String[] dateDMY = dateStr.split("\\.");
@@ -77,30 +73,30 @@ public class PDFdocumentProperties {
         }
     }
 
-    public void setKeywords(String keywordsList) {
+    void setKeywords(String keywordsList) {
         documentProperties.setKeywords(keywordsList);
     }
 
     ////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
-    public String getAuthor() {
+    String getAuthor() {
         return documentProperties.getAuthor();
     }
 
-    public String getTitle() {
+    String getTitle() {
         return documentProperties.getTitle();
     }
 
-    public String getCreator() {
+    String getCreator() {
         return documentProperties.getCreator();
     }
 
-    public String getSubject() {
+    String getSubject() {
         return documentProperties.getSubject();
     }
 
-    public String getCreationDate() {
+    String getCreationDate() {
         //calender performance sucks
         Calendar date = documentProperties.getCreationDate();
         //it helps somehow
@@ -112,7 +108,7 @@ public class PDFdocumentProperties {
 
     }
 
-    public String getModificationDate(){
+    String getModificationDate(){
         //calender performance sucks
         Calendar date = documentProperties.getModificationDate();
         //it helps somehow
@@ -123,14 +119,14 @@ public class PDFdocumentProperties {
             return sdf.format(date.getTime());
     }
 
-    public String getKeywords() {
+    String getKeywords() {
         return documentProperties.getKeywords();
     }
 
     /**
      * prints all properties of pdf in terminal
      */
-    public void printAllProperties() {
+    void printAllProperties() {
         System.out.println("Author: " + this.getAuthor());
         System.out.println("Title: " + this.getTitle());
         System.out.println("Creator: " + this.getCreator());
@@ -139,9 +135,23 @@ public class PDFdocumentProperties {
         System.out.println("Modification date: " + this.getModificationDate());
         System.out.println("Keywords: " + this.getKeywords());
     }
-    public void saveAllPropertiesAsFile(String path) throws IOException {
-        PDDocument document = new PDDocument();
-        //...
+    void saveAllPropertiesInFile(String path) throws IOException {
+        PDFreader reader = new PDFreader(path);
+        PDDocument document = reader.load();
+        PDFtext writer = new PDFtext(document);
+        writer.addText("Author : " + this.getAuthor());
+        writer.nextLine();
+        writer.addText("Title : " + this.getTitle());
+        writer.nextLine();
+        writer.addText("Creator : " + this.getCreator());
+        writer.nextLine();
+        writer.addText("Subject : " + this.getSubject());
+        writer.nextLine();
+        writer.addText("Creation date : " + this.getCreationDate());
+        writer.nextLine();
+        writer.addText("Modification date : " + this.getModificationDate());
+        writer.nextLine();
+        writer.addText("Keywords : " + this.getKeywords());
         document.save(path);
         document.close();
     }

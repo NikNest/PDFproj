@@ -24,13 +24,13 @@ public class PDFreader {
      * @return loaded document
      * @throws IOException
      */
-    public PDDocument load() throws IOException {
+    PDDocument load() throws IOException {
         //Load an existing PDF document using the static method load() of the PDDocument class
         document = PDDocument.load(file);
         return PDDocument.load(file);
     }
 
-    public String read() throws IOException {
+    String read() throws IOException {
         return pdfStripper.getText(document);
     }
 }

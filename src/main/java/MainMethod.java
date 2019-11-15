@@ -21,31 +21,24 @@ public class MainMethod {
                "\\gitproj\\PDFproj\\docs\\BlankTest.pdf");
        paths.put("pathRussian", "D:\\KIT_Informatik\\1_Semester\\Programmieren" +
                "\\gitproj\\PDFproj\\docs\\Russian.pdf");
-       paths.put("pathGerman", "D:\\KIT_Informatik\\1_Semester\\Programmieren"
-               + "\\gitproj\\PDFproj\\docs\\German.pdf");
-       paths.put("pathPicJPG", "D:\\KIT_Informatik\\1_Semester\\Programmieren"
-                + "\\gitproj\\PDFproj\\docs\\250x150picJPG.jpg");
+       paths.put("pathGerman", "D:\\KIT_Informatik\\1_Semester\\Programmieren" +
+               "\\gitproj\\PDFproj\\docs\\German.pdf");
+       paths.put("pathPicJPG", "D:\\KIT_Informatik\\1_Semester\\Programmieren" +
+               "\\gitproj\\PDFproj\\docs\\250x150picJPG.jpg");
+       paths.put("pathFlight", "D:\\KIT_Informatik\\1_Semester\\Programmieren" +
+               "\\gitproj\\PDFproj\\docs\\flight.pdf");
     }
 
     public static void main(String[] args) throws IOException {
         //called to initiallize Map paths
         MainMethod temp = new MainMethod();
-        PDFcreator.createBlankPage(paths.get("pathBlank"), 5);
-        PDFreader reader = new PDFreader(paths.get("pathBlank"));
+        //PDFcreator.createBlankPage(paths.get("pathBlank"), 1);
+        PDFreader reader = new PDFreader(paths.get("pathFlight"));
         document = reader.load();
 
-        PDFtext writer = new PDFtext(document);
-        for(int i=1; i<6;i++) {
-            writer.setOffset(300, 50);
-            writer.addText(Integer.toString(i));
-            writer.setPageNumber(i);
-        }
-        PDFsplitter splitter = new PDFsplitter(document);
-        splitter.split(paths.get("pathBlank"));
-
-        PDFmerge.merge("D:\\KIT_Informatik\\1_Semester\\Programmieren"
-                + "\\gitproj\\PDFproj\\docs\\test.pdf", splitter.getNewPaths());
-
+        PDFprintPages extracter = new PDFprintPages(document);
+        extracter.prtScn("D:\\KIT_Informatik\\1_Semester\\Programmieren" +
+        "\\gitproj\\PDFproj\\docs\\flightpic.jpg");
 
         //save changes
         document.save(paths.get("pathBlank"));
