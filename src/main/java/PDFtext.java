@@ -19,7 +19,7 @@ public class PDFtext {
     //offset of text(default: 25, 700)
     private int[] offset = {25, 700};
     //as default file content will be overwritten
-    boolean append = false;
+    private boolean append = false;
 
     public PDFtext(PDDocument document) {
         this.document = document;
@@ -54,6 +54,8 @@ public class PDFtext {
             append = true;
         }
         contentStream.beginText();
+        //works only for default method newline()
+        contentStream.setLeading(15f);
         contentStream.newLineAtOffset(offset[0], offset[1]);// X Y from the lower left corner
         contentStream.setFont(font,fontSize);
         contentStream.showText(text);
@@ -61,11 +63,13 @@ public class PDFtext {
         contentStream.close();
 
     }
+
     public void tabulate()
     {
         offset[0] += 25;
     }
-    public void nextLine() {
+    //contentStream.newLine();  standart method, meby use it?
+    public void nextLine() throws IOException {
         offset[1] -= 15;
         //tabulating removing
         offset[0] = 25;
@@ -82,11 +86,11 @@ public class PDFtext {
     }
     */
 
+    public void setAppend(boolean append) {
+        this.append = append;
+    }
+
     public void setDefaltFontOffset(boolean append) {
-        if (append) {}
-        else {
-            this.append = false;
-        }
         font = PDType1Font.COURIER;
         offset[0]=25;
         offset[1]=700;

@@ -1,9 +1,6 @@
 package main.java;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 import java.io.IOException;
 
@@ -15,24 +12,19 @@ public class MainMethod {
     private static String pathIndex = "D:\\KIT_Informatik\\1_Semester\\Programmieren"
             + "\\gitproj\\PDFproj\\docs\\IndexTest.pdf";
     private static String pathGBIFolien = "D:\\KIT_Informatik\\1_Semester\\GBI\\Vorlesung Folien\\01-prolog-folien.pdf";
+    private static String pathPic = "D:\\KIT_Informatik\\1_Semester\\Programmieren\\"
+            + "gitproj\\PDFproj\\docs\\smallpic.png";
+    private static String pathPicSmall = "D:\\KIT_Informatik\\1_Semester\\Programmieren"
+            + "\\gitproj\\PDFproj\\docs\\100x177pic.png";
     private static PDDocument document;
     public static void main(String[] args) throws IOException {
         //read pdf document from path in document
-        //PDFcreator.createBlankPage(pathBlank, 1);
-        document = PDFreader.read(pathBlank);
+        PDFcreator.createBlankPage(pathBlank, 1);
 
-        PDFtext textAdder = new PDFtext(document);
+        //recive reference on document
+        PDFreader pdfFile = new PDFreader(pathBlank);
+        document = pdfFile.load();
 
-        textAdder.tabulate();
-        textAdder.addText("First line");
-        textAdder.nextLine();
-        textAdder.addText("Second line");
-        textAdder.nextLine();
-        textAdder.nextLine();
-        textAdder.addText("Last line");
-        textAdder.previousLine();
-        textAdder.tabulate();
-        textAdder.addText("Third line");
 
         //save changes
         document.save(pathBlank);
