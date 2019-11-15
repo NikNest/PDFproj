@@ -9,6 +9,7 @@ import java.util.List;
 
 class PDFsplitter {
     private PDDocument document;
+    private String[]  newPaths;
     PDFsplitter(PDDocument document) {
         this.document = document;
     }
@@ -26,12 +27,20 @@ class PDFsplitter {
         //need to get an iterator object of the list
         Iterator<PDDocument> iterator = Pages.listIterator();
         int i = 1;
+        newPaths = new String[Pages.size()];
         String substr1 = pathPagesSave.substring(0, pathPagesSave.length()-4);
         String substr2 = pathPagesSave.substring(pathPagesSave.length()-4);
         while(iterator.hasNext()) {
             PDDocument pd = iterator.next();
+            newPaths[i-1] = substr1 + i + substr2;
             pd.save(substr1 + i++ + substr2);
             pd.close();
         }
+    }
+    String[] getNewPaths() {
+        if (newPaths!=null)
+            return newPaths;
+        else
+            return null;
     }
 }

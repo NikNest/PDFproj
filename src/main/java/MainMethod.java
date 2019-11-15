@@ -43,6 +43,10 @@ public class MainMethod {
         PDFsplitter splitter = new PDFsplitter(document);
         splitter.split(paths.get("pathBlank"));
 
+        PDFmerge.merge("D:\\KIT_Informatik\\1_Semester\\Programmieren"
+                + "\\gitproj\\PDFproj\\docs\\test.pdf", splitter.getNewPaths());
+
+
         //save changes
         document.save(paths.get("pathBlank"));
         document.close();
