@@ -32,16 +32,18 @@ public class MainMethod {
     public static void main(String[] args) throws IOException {
         //called to initiallize Map paths
         MainMethod temp = new MainMethod();
-        //PDFcreator.createBlankPage(paths.get("pathBlank"), 1);
-        PDFreader reader = new PDFreader(paths.get("pathFlight"));
+        PDFcreator.createBlankPage(paths.get("pathBlank"), 1);
+        PDFreader reader = new PDFreader(paths.get("pathGBIFolien"));
         document = reader.load();
 
-        PDFprintPages extracter = new PDFprintPages(document);
-        extracter.prtScn("D:\\KIT_Informatik\\1_Semester\\Programmieren" +
-        "\\gitproj\\PDFproj\\docs\\flightpic.jpg");
+        PDFpagesExtracter extracter = new PDFpagesExtracter(document);
+        extracter.addPage(3);
+        extracter.addPage(0);
+        extracter.addPage(6);
+        extracter.extractAddedPages(paths.get("pathBlank"));
 
         //save changes
-        document.save(paths.get("pathBlank"));
+        //document.save(paths.get("pathBlank"));
         document.close();
     }
 }

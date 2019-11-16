@@ -10,13 +10,17 @@ import java.util.GregorianCalendar;
 
 public class PDFdocumentProperties {
     private PDDocumentInformation documentProperties;
-
+    private int numberOfPages;
     PDFdocumentProperties(PDDocument document) {
         /*
             PDFBox provides a class called PDDocumentInformation and this class provides
             various methods. These methods can set various properties to the document and retrieve them.
         */
+        /*You can list the number of pages that exists in the
+        PDF document using the getNumberOfPages() method as shown below.*/
+        numberOfPages = document.getNumberOfPages();
         documentProperties = document.getDocumentInformation();
+
     }
 
     void setAuthor(String author) {
@@ -80,23 +84,23 @@ public class PDFdocumentProperties {
     ////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
-    String getAuthor() {
+    private String getAuthor() {
         return documentProperties.getAuthor();
     }
 
-    String getTitle() {
+    private String getTitle() {
         return documentProperties.getTitle();
     }
 
-    String getCreator() {
+    private String getCreator() {
         return documentProperties.getCreator();
     }
 
-    String getSubject() {
+    private String getSubject() {
         return documentProperties.getSubject();
     }
 
-    String getCreationDate() {
+    private String getCreationDate() {
         //calender performance sucks
         Calendar date = documentProperties.getCreationDate();
         //it helps somehow
@@ -108,7 +112,7 @@ public class PDFdocumentProperties {
 
     }
 
-    String getModificationDate(){
+    private String getModificationDate(){
         //calender performance sucks
         Calendar date = documentProperties.getModificationDate();
         //it helps somehow
@@ -119,7 +123,7 @@ public class PDFdocumentProperties {
             return sdf.format(date.getTime());
     }
 
-    String getKeywords() {
+    private String getKeywords() {
         return documentProperties.getKeywords();
     }
 
@@ -155,5 +159,7 @@ public class PDFdocumentProperties {
         document.save(path);
         document.close();
     }
-
+    int getNumberOfPages() {
+        return numberOfPages;
+    }
 }

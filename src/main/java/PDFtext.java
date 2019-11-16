@@ -11,7 +11,7 @@ public class PDFtext {
     private PDDocument document;
     private PDPageContentStream contentStream;
     //page that will be modified(default: 0)
-    private int pageNumber=0;
+    private int pageIndex =0;
     //font of text(default: PDType1Font.COURIER)
     private PDType1Font font = PDType1Font.COURIER;
     //font size of text(default: 12)
@@ -21,7 +21,7 @@ public class PDFtext {
     //as default file content will be overwritten
     private boolean append = false;
 
-    public PDFtext(PDDocument document) {
+    PDFtext(PDDocument document) {
         this.document = document;
     }
 
@@ -30,7 +30,7 @@ public class PDFtext {
     //PREPAND - under old text
     //APPEND - over old text
     //OVERWRITE - write in a blank document(old content will be deleted)
-    public void addText(String text) throws IOException {
+    void addText(String text) throws IOException {
 
         /*
         You can insert various kinds of data elements using the object
@@ -40,7 +40,7 @@ public class PDFtext {
         Retrieve the object of the required page by passing
         its index to this method as shown below.
         */
-        PDPage page = document.getPage(pageNumber);
+        PDPage page = document.getPage(pageIndex);
         if (append) {
             contentStream = new PDPageContentStream(
                     document, page, PDPageContentStream.AppendMode.APPEND, true);
@@ -66,7 +66,7 @@ public class PDFtext {
         offset[0] += 25;
     }
     //contentStream.newLine();  standart method, meby use it?
-    public void nextLine() throws IOException {
+    void nextLine() throws IOException {
         offset[1] -= 15;
         //tabulating removing
         offset[0] = 25;
@@ -94,8 +94,8 @@ public class PDFtext {
 
     }
 
-    void setPageNumber(int pageNumber) {
-        this.pageNumber = pageNumber;
+    void setPageIndex(int pageIndex) {
+        this.pageIndex = pageIndex;
     }
 
     void setFont(PDType1Font font) {
