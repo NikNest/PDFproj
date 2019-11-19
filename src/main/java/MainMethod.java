@@ -33,17 +33,12 @@ public class MainMethod {
         //called to initiallize Map paths
         MainMethod temp = new MainMethod();
         PDFcreator.createBlankPage(paths.get("pathBlank"), 1);
-        PDFreader reader = new PDFreader(paths.get("pathGBIFolien"));
+        PDFreader reader = new PDFreader(paths.get("pathBlank"));
         document = reader.load();
-
-        PDFpagesExtracter extracter = new PDFpagesExtracter(document);
-        extracter.addPage(3);
-        extracter.addPage(0);
-        extracter.addPage(6);
-        extracter.extractAddedPages(paths.get("pathBlank"));
-
+        PDFtext writer = new PDFtext(document);
+        writer.addText("2222");
         //save changes
-        //document.save(paths.get("pathBlank"));
+        document.save(paths.get("pathBlank"));
         document.close();
     }
 }
